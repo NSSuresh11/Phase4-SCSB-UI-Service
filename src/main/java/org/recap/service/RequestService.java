@@ -371,6 +371,9 @@ public class RequestService {
                                             InstitutionEntity requestingInstitutionEntity = institutionDetailsRepository.findByInstitutionCode(requestForm.getRequestingInstitution());
                                             Map<String, String> recalAvailablePropertyMap = propertyUtil.getPropertyByKeyForAllInstitutions(PropertyKeyConstants.ILS.ILS_RECALL_FUNCTIONALITY_AVAILABLE);
                                             isRecallAvailableforRequestingInst = Boolean.parseBoolean(recalAvailablePropertyMap.get(requestingInstitutionEntity.getInstitutionCode()));
+                                           if(isRecallAvailableforRequestingInst) {
+                                               requestTypes.remove(ScsbCommonConstants.RECALL);
+                                           }
                                             getRequestService().processCustomerAndDeliveryCodes(requestForm, deliveryLocationsMap, userDetailsForm, itemEntity, institutionId);
                                             deliveryLocationsMap = sortDeliveryLocationForRecapUser(deliveryLocationsMap, userDetailsForm);
                                         }
