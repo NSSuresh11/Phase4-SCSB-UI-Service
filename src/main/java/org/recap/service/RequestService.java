@@ -408,7 +408,7 @@ public class RequestService {
                 for (RequestTypeEntity requestTypeEntity : requestTypeEntities) {
                     requestTypes.add(requestTypeEntity.getRequestTypeCode());
                 }
-                if(!(isRecallAvailable || isRecallAvailableforRequestingInst)) {
+                if(!isRecallAvailable || !isRecallAvailableforRequestingInst) {
                     requestTypes.remove(ScsbCommonConstants.RECALL);
                 }
 
@@ -417,11 +417,11 @@ public class RequestService {
                 for (RequestTypeEntity requestTypeEntity : requestTypeEntityList) {
                     requestTypes.add(requestTypeEntity.getRequestTypeCode());
                 }
-                if(!(isRecallAvailable || isRecallAvailableforRequestingInst)) {
+                if(!isRecallAvailable || !isRecallAvailableforRequestingInst) {
                     requestTypes.remove(ScsbCommonConstants.RECALL);
                 }
             }
-            if (!multipleItemBarcodes && CollectionUtils.isNotEmpty(notAvailableBarcodes) && !(isRecallAvailable || isRecallAvailableforRequestingInst)) {
+            if (!multipleItemBarcodes && CollectionUtils.isNotEmpty(notAvailableBarcodes) && (!isRecallAvailable || !isRecallAvailableforRequestingInst)) {
                 requestTypes = new LinkedHashSet<>();
             }
             jsonObject.put(ScsbConstants.REQUEST_TYPES, requestTypes);
