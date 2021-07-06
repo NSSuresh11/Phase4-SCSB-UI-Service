@@ -306,7 +306,7 @@ public class RequestService {
     public String populateItemForRequest(RequestForm requestForm, HttpServletRequest request) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         Boolean multipleItemBarcodes = false;
-        Boolean isRecallAvailable = true;
+        Boolean isRecallAvailable = false;
         Boolean isRecallAvailableforRequestingInst = true;
 
         Map<String, String> deliveryLocationsMap = new LinkedHashMap<>();
