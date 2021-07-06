@@ -369,11 +369,11 @@ public class RequestService {
                                         }
                                         if ("true".equals(requestForm.getOnChange()) && StringUtils.isNotBlank(requestForm.getRequestingInstitution())) {
                                             InstitutionEntity requestingInstitutionEntity = institutionDetailsRepository.findByInstitutionCode(requestForm.getRequestingInstitution());
-                                            Map<String, String> recalAvailablePropertyMap = propertyUtil.getPropertyByKeyForAllInstitutions(PropertyKeyConstants.ILS.ILS_RECALL_FUNCTIONALITY_AVAILABLE);
-                                            isRecallAvailableforRequestingInst = Boolean.parseBoolean(recalAvailablePropertyMap.get(requestingInstitutionEntity.getInstitutionCode()));
-                                           if(isRecallAvailableforRequestingInst) {
-                                               requestTypes.remove(ScsbCommonConstants.RECALL);
-                                           }
+                                            Map<String, String> recallAvailablePropertyMap = propertyUtil.getPropertyByKeyForAllInstitutions(PropertyKeyConstants.ILS.ILS_RECALL_FUNCTIONALITY_AVAILABLE);
+                                            isRecallAvailableforRequestingInst = Boolean.parseBoolean(recallAvailablePropertyMap.get(requestingInstitutionEntity.getInstitutionCode()));
+                                            if(!isRecallAvailableforRequestingInst) {
+                                                requestTypes.remove(ScsbCommonConstants.RECALL);
+                                            }
                                             getRequestService().processCustomerAndDeliveryCodes(requestForm, deliveryLocationsMap, userDetailsForm, itemEntity, institutionId);
                                             deliveryLocationsMap = sortDeliveryLocationForRecapUser(deliveryLocationsMap, userDetailsForm);
                                         }
