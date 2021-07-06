@@ -368,6 +368,9 @@ public class RequestService {
                                             requestForm.setRequestingInstitution(replaceReqInst);
                                         }
                                         if ("true".equals(requestForm.getOnChange()) && StringUtils.isNotBlank(requestForm.getRequestingInstitution())) {
+                                            InstitutionEntity requestingInstitutionEntity = institutionDetailsRepository.findByInstitutionCode(requestForm.getRequestingInstitution());
+                                            Map<String, String> recalAvailablePropertyMap = propertyUtil.getPropertyByKeyForAllInstitutions(PropertyKeyConstants.ILS.ILS_RECALL_FUNCTIONALITY_AVAILABLE);
+                                            isRecallAvailableforRequestingInst = Boolean.parseBoolean(recalAvailablePropertyMap.get(requestingInstitutionEntity.getInstitutionCode()));
                                             getRequestService().processCustomerAndDeliveryCodes(requestForm, deliveryLocationsMap, userDetailsForm, itemEntity, institutionId);
                                             deliveryLocationsMap = sortDeliveryLocationForRecapUser(deliveryLocationsMap, userDetailsForm);
                                         }
@@ -382,9 +385,6 @@ public class RequestService {
                         invalidBarcodes.add(barcode);
                     }
                 }
-                InstitutionEntity requestingInstitutionEntity = institutionDetailsRepository.findByInstitutionCode(requestForm.getRequestingInstitution());
-                Map<String, String> recalAvailablePropertyMap = propertyUtil.getPropertyByKeyForAllInstitutions(PropertyKeyConstants.ILS.ILS_RECALL_FUNCTIONALITY_AVAILABLE);
-                isRecallAvailableforRequestingInst = Boolean.parseBoolean(recalAvailablePropertyMap.get(requestingInstitutionEntity.getInstitutionCode()));
 
             }
             if (CollectionUtils.isNotEmpty(itemTitles)) {
