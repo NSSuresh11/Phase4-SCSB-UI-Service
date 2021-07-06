@@ -306,8 +306,8 @@ public class RequestService {
     public String populateItemForRequest(RequestForm requestForm, HttpServletRequest request) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         Boolean multipleItemBarcodes = false;
-        Boolean isRecallAvailable = false;
-        Boolean isRecallAvailableforRequestingInst = false;
+        Boolean isRecallAvailable = true;
+        Boolean isRecallAvailableforRequestingInst = true;
 
         Map<String, String> deliveryLocationsMap = new LinkedHashMap<>();
         Map<String, String> frozenInstitutionPropertyMap = propertyUtil.getPropertyByKeyForAllInstitutions(PropertyKeyConstants.ILS.ILS_ENABLE_CIRCULATION_FREEZE);
@@ -371,9 +371,6 @@ public class RequestService {
                                             InstitutionEntity requestingInstitutionEntity = institutionDetailsRepository.findByInstitutionCode(requestForm.getRequestingInstitution());
                                             Map<String, String> recallAvailablePropertyMap = propertyUtil.getPropertyByKeyForAllInstitutions(PropertyKeyConstants.ILS.ILS_RECALL_FUNCTIONALITY_AVAILABLE);
                                             isRecallAvailableforRequestingInst = Boolean.parseBoolean(recallAvailablePropertyMap.get(requestingInstitutionEntity.getInstitutionCode()));
-                                            if(!isRecallAvailableforRequestingInst) {
-                                                requestTypes.remove(ScsbCommonConstants.RECALL);
-                                            }
                                             getRequestService().processCustomerAndDeliveryCodes(requestForm, deliveryLocationsMap, userDetailsForm, itemEntity, institutionId);
                                             deliveryLocationsMap = sortDeliveryLocationForRecapUser(deliveryLocationsMap, userDetailsForm);
                                         }
